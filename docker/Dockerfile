@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /var/www/html
 
 # Copy Yii2 app files into container
-COPY ./yii-app/. .
+COPY ./yii2-app/. .
 
 # Set file permissions
 RUN chown -R www-data:www-data /var/www/html
