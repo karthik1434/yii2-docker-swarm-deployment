@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  yii2:
+    image: yii2-app
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - web
+    ports:
+      - "9000:80"
+
+networks:
+  web:
+    external: true
