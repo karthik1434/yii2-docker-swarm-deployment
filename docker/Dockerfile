@@ -19,4 +19,4 @@ COPY ./yii-app/. .
 RUN chown -R www-data:www-data /var/www/html
 
 # Expose port
-EXPOSE 80
+EXPOSE 8080
