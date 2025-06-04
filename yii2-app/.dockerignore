@@ -1,6 +1,0 @@
-vendor/
-runtime/
-node_modules/
-.git
-Dockerfile
-docker-compose.yml
