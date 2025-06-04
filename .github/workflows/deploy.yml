@@ -26,7 +26,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: .
-        file: ./docker/php/Dockerfile
+        file: ./yii2-app/docker/php/Dockerfile
         push: true
         tags: duggana1994/yii2-app:latest
 
