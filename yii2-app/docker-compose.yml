@@ -1,9 +1,29 @@
-version: '2'
 services:
-  php:
-    image: yiisoftware/yii2-php:8.1-apache
+  yii2-php:
+    build:
+      context: D:/yii2-docker-swarm-deployment/yii2-app
+      dockerfile: D:/yii2-docker-swarm-deployment/yii2-app/docker/php/Dockerfile
+    container_name: yii2-php
+    restart: unless-stopped
     volumes:
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      - ./:/app:delegated
+      - D:/yii2-docker-swarm-deployment/yii2-app:/var/www/html
+    networks:
+      - yii2-network
+
+  yii2-nginx:
+    image: nginx:alpine
+    container_name: yii2-nginx
+    restart: unless-stopped
     ports:
-      - '8000:80'
+      - "8080:80"
+    volumes:
+      - D:/yii2-docker-swarm-deployment/yii2-app:/var/www/html
+      - D:/yii2-docker-swarm-deployment/yii2-app/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - yii2-php
+    networks:
+      - yii2-network
+
+networks:
+  yii2-network:
+    driver: bridge
