@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /var/www/html
 
-COPY ./yii2-app/ /var/www/html/
+COPY ../yii2-app/ /var/www/html/
 
 RUN chown -R www-data:www-data /var/www/html/runtime /var/www/html/web/assets \
     && chmod -R 775 /var/www/html/runtime /var/www/html/web/assets \
