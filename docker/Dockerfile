@@ -16,7 +16,7 @@ WORKDIR /var/www/html
 COPY ./yii2-app/. .
 
 # Set file permissions
-RUN chown -R www-data:www-data /var/www/html
-
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
 # Expose port
 EXPOSE 8080
