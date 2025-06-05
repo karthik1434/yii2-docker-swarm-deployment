@@ -1,0 +1,43 @@
+- hosts: web
+  become: yes
+  tasks:
+    - name: Install dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - docker.io
+        - docker-compose
+        - nginx
+        - git
+        - php-cli
+        - php-fpm
+        - unzip
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Initialize Docker Swarm
+      shell: docker swarm init
+      ignore_errors: true
+
+    - name: Copy NGINX config
+      copy:
+        src: ../../nginx/yii2.conf
+        dest: /etc/nginx/sites-available/yii2.conf
+        mode: 0644
+
+    - name: Enable NGINX site
+      file:
+        src: /etc/nginx/sites-available/yii2.conf
+        dest: /etc/nginx/sites-enabled/yii2.conf
+        state: link
+        force: yes
+
+    - name: Restart NGINX
+      service:
+        name: nginx
+        state: restarted
