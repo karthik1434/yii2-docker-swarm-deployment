@@ -34,7 +34,6 @@ jobs:
 
     - name: Run Ansible Playbook
       run: |
-        cd ansible
-        ansible-playbook -i hosts playbooks/setup.yml
+        ansible-playbook ansible/playbooks/setup.yml
     
 
