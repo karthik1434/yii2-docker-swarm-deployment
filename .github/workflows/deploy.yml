@@ -17,8 +17,7 @@ jobs:
 
     - name: Build & Push Docker Image
       run: |
-        cd docker
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/yii2-app:latest .
+        docker build -f docker/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/yii2-app:latest .
         docker push ${{ secrets.DOCKER_USERNAME }}/yii2-app:latest
 
     - name: SSH and Update Swarm
