@@ -67,6 +67,19 @@
         dest: /home/ubuntu/app/docker-compose.yml
         mode: '0644'
 
+    - name: Deploy Node Exporter container
+      docker_container:
+        name: node_exporter
+        image: quay.io/prometheus/node-exporter:latest
+        state: started
+        restart_policy: unless-stopped
+        network_mode: host
+        pid_mode: host
+        volumes:
+          - "/:/host:ro,rslave"
+        command: "--path.rootfs=/host"
+        detach: true
+
 
     - name: Deploy Docker stack
       shell: docker stack deploy -c /home/ubuntu/app/docker-compose.yml yii2app
