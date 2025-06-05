@@ -11,7 +11,7 @@
       apt:
         upgrade: dist
         autoremove: yes
-        
+
     - name: Install dependencies
       apt:
         name: "{{ item }}"
@@ -52,6 +52,14 @@
       service:
         name: nginx
         state: restarted
+
+    - name: Create app directory
+      file:
+        path: /home/ubuntu/app
+        state: directory
+        mode: '0755'
+        owner: ubuntu
+        group: ubuntu
 
     - name: Copy docker-compose.yml to EC2
       copy:
