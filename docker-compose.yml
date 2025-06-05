@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   yii2:
-    image: duggana1994S/yii2-app:latest
+    image: duggana1994/yii2-app:latest
     ports:
       - "9000:9000"
     deploy:
