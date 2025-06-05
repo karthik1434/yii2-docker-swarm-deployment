@@ -41,3 +41,15 @@
       service:
         name: nginx
         state: restarted
+
+    - name: Copy docker-compose.yml to EC2
+      copy:
+        src: ../../docker-compose.yml
+        dest: /home/ubuntu/app/docker-compose.yml
+        mode: '0644'
+
+
+    - name: Deploy Docker stack
+      shell: docker stack deploy -c /home/ubuntu/app/docker-compose.yml yii2app
+    
+

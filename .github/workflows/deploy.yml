@@ -20,17 +20,19 @@ jobs:
         docker build -f docker/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/yii2-app:latest .
         docker push ${{ secrets.DOCKER_USERNAME }}/yii2-app:latest
 
-    - name: SSH and Update Swarm
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          docker service rm yii2 || true
-          docker service create \
-            --name yii2 \
-            --publish published=9000,target=9000 \
-            --replicas=1 \
-            ${{ secrets.DOCKER_USERNAME }}/yii2-app:latest
-        #
+    - name: Install Ansible and jq
+      run: |
+        sudo apt update
+        sudo apt install -y ansible jq
+
+    - name: Set up SSH for Ansible
+      run: |
+        mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
+        echo "${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+    - name: Run Ansible Playbook
+      run: |
+        ansible-playbook ansible/playbooks/setup.yaml
+    
+
