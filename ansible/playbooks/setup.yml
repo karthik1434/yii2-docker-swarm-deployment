@@ -1,4 +1,4 @@
-- hosts: host
+- hosts: web
   become: yes
   tasks:
     - name: Install dependencies
