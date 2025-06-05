@@ -67,6 +67,12 @@
         dest: /home/ubuntu/app/docker-compose.yml
         mode: '0644'
 
+    - name: prometheus.yml to EC2
+      copy:
+        src: ../../prometheus.yml
+        dest: /home/ubuntu/app/prometheus.yml
+        mode: '0644'
+
     - name: Deploy Node Exporter container
       docker_container:
         name: node_exporter
@@ -83,5 +89,3 @@
 
     - name: Deploy Docker stack
       shell: docker stack deploy -c /home/ubuntu/app/docker-compose.yml yii2app
-    
-
